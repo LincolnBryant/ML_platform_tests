@@ -41,6 +41,6 @@ if [ "$OWNER" != "" ] && [ "$CONNECT_GROUP" != "" ]; then
     # get tutorial in.
     cp -r /ML_platform_tests/tutorial ~/.
     # Invoke Jupyter lab as the user
-    su $OWNER -c "jupyter lab --ServerApp.root_dir=/home/${OWNER} --no-browser --config=/usr/local/etc/jupyter_notebook_config.py"
+    su - $OWNER -c "PATH=$PATH:/jupyter/bin; /jupyter/bin/jupyter lab --ServerApp.root_dir=/home/${OWNER} --no-browser --config=/usr/local/etc/jupyter_notebook_config.py"
     sleep 600
 fi 
