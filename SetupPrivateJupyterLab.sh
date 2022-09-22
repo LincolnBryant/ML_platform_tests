@@ -23,6 +23,16 @@ if [ "$OWNER" != "" ] && [ "$CONNECT_GROUP" != "" ]; then
     PATH=$PATH:/usr/sbin
     # Set the user's $DATA dir
     export DATA=/data/$OWNER
+    if [ -z "$OWNER_UID" ] || [ -z "$OWNER_GROUP" ] || [ -z "$OWNER_GROUP_GID" ]; then 
+        echo "No UID or GID, cowardly aborting"
+        exit 1
+    else
+        # Create the base group
+        groupadd "$OWNER_GROUP" -g "$OWNER_GROUP_GID"
+        # Create the user with no home directory (should already exist on NFS)
+        # and the correct UID/GID
+        useradd "$OWNER" -M -u "$OWNER_UID" -g "$OWNER_GROUP"
+    fi
     # Match PS1 as we have it on the login nodes
     echo 'export PS1="[\A] \H:\w $ "' >> /etc/bash.bashrc
     # Chown the /workspace directory so users can create notebooks
