@@ -2,7 +2,6 @@
 if [ "$ROOTSYS" != "" ]; then 
     mkdir -p /root/.local/share/jupyter/kernels
     cp -r $ROOTSYS/etc/notebook/kernels/root ~/.local/share/jupyter/kernels
-    source scl_source enable rh-python38
     python3.8 -m pip --no-cache-dir install  root-pandas 
 fi
 
@@ -42,7 +41,6 @@ if [ "$OWNER" != "" ] && [ "$CONNECT_GROUP" != "" ]; then
     # get tutorial in.
     cp -r /ML_platform_tests/tutorial ~/.
     # Invoke Jupyter lab as the user
-    source scl_source enable rh-python38; 
     su $OWNER -c "jupyter lab --ServerApp.root_dir=/home/${OWNER} --no-browser --config=/usr/local/etc/jupyter_notebook_config.py"
     sleep 600
 fi 
