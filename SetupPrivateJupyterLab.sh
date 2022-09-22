@@ -7,8 +7,8 @@ if [ "$ROOTSYS" != "" ]; then
 fi
 
 # With RISE, a Jupyter notebook extension, you can instantly turn your jupyter notebook into a live reveal.js-based presentation.
-jupyter-nbextension install rise --py --sys-prefix
-jupyter-nbextension enable rise --py --sys-prefix
+#jupyter-nbextension install rise --py --sys-prefix
+#jupyter-nbextension enable rise --py --sys-prefix
 
 if [ "$1" != "" ]; then
     echo "Git Repo $1 requested..."
@@ -43,7 +43,5 @@ if [ "$OWNER" != "" ] && [ "$CONNECT_GROUP" != "" ]; then
     cp -r /ML_platform_tests/tutorial ~/.
     # Invoke Jupyter lab as the user
     su $OWNER -c "source scl_source enable rh-python38; jupyter lab --ServerApp.root_dir=/home/${OWNER} --no-browser --config=/usr/local/etc/jupyter_notebook_config.py"
-
-# else
-#    jupyter lab --allow-root --ServerApp.root_dir=${HOME} --no-browser --config=/usr/local/etc/jupyter_notebook_config.py
+    sleep 600
 fi 
