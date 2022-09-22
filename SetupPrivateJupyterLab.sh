@@ -1,8 +1,10 @@
 # copy ROOT kernel into Jupyter
-if [ "$ROOTSYS" != ""]; then 
+if [ "$ROOTSYS" != "" ]; then 
     mkdir -p /root/.local/share/jupyter/kernels
     cp -r $ROOTSYS/etc/notebook/kernels/root ~/.local/share/jupyter/kernels
 fi
+
+source scl_source enable rh-python38
  
 python3.8 -m pip --no-cache-dir install  root-pandas 
 
