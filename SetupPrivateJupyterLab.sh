@@ -1,9 +1,8 @@
-# setup ROOT
-cd /opt/root/
-source bin/thisroot.sh
 # copy ROOT kernel into Jupyter
-mkdir -p /root/.local/share/jupyter/kernels
-cp -r $ROOTSYS/etc/notebook/kernels/root ~/.local/share/jupyter/kernels
+if [ "$ROOTSYS" != ""]; then 
+    mkdir -p /root/.local/share/jupyter/kernels
+    cp -r $ROOTSYS/etc/notebook/kernels/root ~/.local/share/jupyter/kernels
+fi
  
 python3.8 -m pip --no-cache-dir install  root-pandas 
 
@@ -22,9 +21,6 @@ export SHELL=/bin/bash
 # setting up users
 if [ "$OWNER" != "" ] && [ "$CONNECT_GROUP" != "" ]; then
     PATH=$PATH:/usr/sbin
-    /sync_users_debian.sh -u root."$CONNECT_GROUP" -g root."$CONNECT_GROUP" -e https://api.ci-connect.net:18080
-    # Do not leak some important tokens
-    unset API_TOKEN
     # Set the user's $DATA dir
     export DATA=/data/$OWNER
     # Match PS1 as we have it on the login nodes
