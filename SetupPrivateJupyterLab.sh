@@ -42,6 +42,7 @@ if [ "$OWNER" != "" ] && [ "$CONNECT_GROUP" != "" ]; then
     # get tutorial in.
     cp -r /ML_platform_tests/tutorial ~/.
     # Invoke Jupyter lab as the user
-    su $OWNER -c "source scl_source enable rh-python38; jupyter lab --ServerApp.root_dir=/home/${OWNER} --no-browser --config=/usr/local/etc/jupyter_notebook_config.py"
+    source scl_source enable rh-python38; 
+    su $OWNER -c "jupyter lab --ServerApp.root_dir=/home/${OWNER} --no-browser --config=/usr/local/etc/jupyter_notebook_config.py"
     sleep 600
 fi 
