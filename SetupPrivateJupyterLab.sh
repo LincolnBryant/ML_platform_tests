@@ -37,7 +37,7 @@ if [ "$OWNER" != "" ] && [ "$CONNECT_GROUP" != "" ]; then
     # Read the user's customization script and install extras
     if [ -f /home/$OWNER/.jupyter/customize ]; then
         echo "Installing customizations for $OWNER"
-        pip install -r $OWNER/.jupyter/customize
+        pip install -r /home/$OWNER/.jupyter/customize
     fi
     # Change to the user's homedir
     if [ ! -z "$OWNER" ]; then
