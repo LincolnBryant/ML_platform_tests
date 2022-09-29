@@ -34,6 +34,11 @@ if [ "$OWNER" != "" ] && [ "$CONNECT_GROUP" != "" ]; then
     fi
     # Match PS1 as we have it on the login nodes
     echo 'export PS1="[\A] \H:\w $ "' >> /etc/bash.bashrc
+    # Read the user's customization script and install extras
+    if [ -f /home/$OWNER/.jupyter/customize ]; then
+        echo "Installing customizations for $OWNER"
+        pip install -r $OWNER/.jupyter/customize
+    fi
     # Change to the user's homedir
     if [ ! -z "$OWNER" ]; then
         echo "Chowning venv to user"
