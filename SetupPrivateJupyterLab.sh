@@ -34,13 +34,18 @@ if [ "$OWNER" != "" ] && [ "$CONNECT_GROUP" != "" ]; then
     fi
     # Match PS1 as we have it on the login nodes
     echo 'export PS1="[\A] \H:\w $ "' >> /etc/bash.bashrc
-    # Chown the /workspace directory so users can create notebooks
-    chown -R $OWNER: /workspace
     # Change to the user's homedir
+    if [ ! -z "$OWNER" ]; then
+        echo "Chowning venv to user"
+        chown -R $OWNER: /jupyter
+        echo "Chowning workspace dir to user"
+        chown -R $OWNER: /workspace
+    fi
     cd /home/$OWNER
     # get tutorial in.
     cp -r /ML_platform_tests/tutorial ~/.
     # Invoke Jupyter lab as the user
-    su - $OWNER -c "PATH=$PATH:/jupyter/bin; /jupyter/bin/jupyter lab --ServerApp.root_dir=/home/${OWNER} --no-browser --config=/usr/local/etc/jupyter_notebook_config.py"
+    #su - $OWNER -c "PATH=$PATH:/jupyter/bin; /jupyter/bin/jupyter lab --ServerApp.root_dir=/home/${OWNER} --no-browser --config=/usr/local/etc/jupyter_notebook_config.py"
+    su - $OWNER -c "jupyter lab --ServerApp.root_dir=/home/${OWNER} --no-browser --config=/usr/local/etc/jupyter_notebook_config.py"
     sleep 600
 fi 
